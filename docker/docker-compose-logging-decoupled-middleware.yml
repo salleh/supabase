@@ -100,10 +100,10 @@ services:
       interval: 5s
       retries: 10
     restart: unless-stopped
-    depends_on:
-      db:
-        # Disable this if you are using an external Postgres database
-        condition: service_healthy
+    # depends_on:
+      # db:
+      #   # Disable this if you are using an external Postgres database
+      #   condition: service_healthy
     ports:
       - ${LOGFLARE_HTTP_PORT}:4000/tcp
     volumes:
