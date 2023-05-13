@@ -7,4 +7,4 @@ docker compose -f docker-compose-decoupled-middleware.yml down
 docker compose -f docker-compose-decoupled-db.yml down
 
 # delete the shared network
-docker network create sbnet
+docker network rm sbnet
