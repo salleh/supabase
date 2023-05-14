@@ -1,10 +1,12 @@
 #!/bin/sh
 
+CUR_PROJECT_NAME="${PROJECT_NAME}"
+
 # remove the Middleware services
-docker compose -f docker-compose-decoupled-middleware.yml down
+docker compose -p ${CUR_PROJECT_NAME}-mw -f docker-compose-decoupled-middleware.yml down
 
 # remove the DB service
-docker compose -f docker-compose-decoupled-db.yml down
+docker compose -p ${CUR_PROJECT_NAME}-db -f docker-compose-decoupled-db.yml down
 
 # delete the shared network
-docker network rm sbnet
+docker network rm ${PROJECT_NAME}

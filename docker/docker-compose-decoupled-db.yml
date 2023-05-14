@@ -9,10 +9,11 @@ version: "3.8"
 networks:
   sbnet:
     external: true
+    name: ${PROJECT_NAME}
 
 services:
   db:
-    container_name: supabase-db
+    container_name: ${PROJECT_NAME}-db
     image: supabase/postgres:15.1.0.79
     healthcheck:
       test: pg_isready -U postgres -h localhost

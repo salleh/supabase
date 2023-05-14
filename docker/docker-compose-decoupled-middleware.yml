@@ -9,10 +9,11 @@ version: "3.8"
 networks:
   sbnet:
     external: true
+    name: ${PROJECT_NAME}
 
 services:
   studio:
-    container_name: supabase-studio
+    container_name: ${PROJECT_NAME}-studio
     image: supabase/studio:20230330-99fed3d
     restart: unless-stopped
     healthcheck:
@@ -43,7 +44,7 @@ services:
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
 
   kong:
-    container_name: supabase-kong
+    container_name: ${PROJECT_NAME}-kong
     image: kong:2.8.1
     restart: unless-stopped
     networks:
@@ -64,7 +65,7 @@ services:
       - ./volumes/api/kong.yml:/var/lib/kong/kong.yml:ro
 
   auth:
-    container_name: supabase-auth
+    container_name: ${PROJECT_NAME}-auth
     image: supabase/gotrue:v2.60.7
     # depends_on:
       # db:
@@ -124,7 +125,7 @@ services:
       MFA_ENABLED: ${MFA_ENABLED}
 
   rest:
-    container_name: supabase-rest
+    container_name: ${PROJECT_NAME}-rest
     image: postgrest/postgrest:v10.1.2
     # depends_on:
       # db:
@@ -141,7 +142,7 @@ services:
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
   realtime:
-    container_name: realtime-dev.supabase-realtime
+    container_name: ${PROJECT_NAME}-realtime
     image: supabase/realtime:v2.5.1
     # depends_on:
       # db:
@@ -181,7 +182,7 @@ services:
       sh -c "/app/bin/migrate && /app/bin/realtime eval 'Realtime.Release.seeds(Realtime.Repo)' && /app/bin/server"
 
   storage:
-    container_name: supabase-storage
+    container_name: ${PROJECT_NAME}-storage
     image: supabase/storage-api:v0.28.2
     depends_on:
       # db:
@@ -226,7 +227,7 @@ services:
       - ./volumes/storage:/var/lib/storage:z
 
   imgproxy:
-    container_name: supabase-imgproxy
+    container_name: ${PROJECT_NAME}-imgproxy
     image: darthsim/imgproxy:v3.13
     healthcheck:
       test: [ "CMD", "imgproxy", "health" ]
@@ -244,7 +245,7 @@ services:
       - ./volumes/storage:/var/lib/storage:z
 
   meta:
-    container_name: supabase-meta
+    container_name: ${PROJECT_NAME}-meta
     image: supabase/postgres-meta:v0.60.7
     # depends_on:
       # db:
@@ -262,7 +263,7 @@ services:
       PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
   functions:
-    container_name: supabase-edge-functions
+    container_name: ${PROJECT_NAME}-edge-functions
     image: supabase/edge-runtime:v1.2.12
     restart: unless-stopped
     environment:

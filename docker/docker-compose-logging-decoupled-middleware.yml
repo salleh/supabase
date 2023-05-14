@@ -149,17 +149,3 @@ services:
     volumes:
       - ./volumes/logs/vector.yml:/etc/vector/vector.yml:ro
     command: [ "--config", "etc/vector/vector.yml" ]
-  
-  # Comment out everything below this point if you are using an external Postgres database
-  # db:
-  #   logging:
-  #     driver: syslog
-  #     options:
-  #       syslog-address: "tcp://localhost:${VECTOR_PORT}"
-  #       tag: db
-  #   depends_on:
-  #     vector:
-  #       # Disable this if you are using an external Postgres database
-  #       condition: service_healthy
-  #   volumes:
-  #     - ./volumes/db/logs.sql:/docker-entrypoint-initdb.d/migrations/99-logs.sql:Z
